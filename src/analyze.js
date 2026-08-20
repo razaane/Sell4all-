@@ -1,5 +1,6 @@
 const fs = require("fs");
 const {parse} = require("csv-parse/sync");
+const { log } = require("console");
 
 //​ Lire les données du fichier CSV dataset-sell4all.csv ;
 const fileContent= fs.readFileSync("data/dataset-sell4all.csv","utf-8");
@@ -59,3 +60,38 @@ for(spen of spendings){
 }
 const moyenneSpendings = sum2/count2;
 console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2));
+
+//Calculez la médiane d'âge pour chaque pays.
+//groupement pour chaque pays 
+ const ageParCountry={};
+ for(row of data){
+    const age =Number(row["Age"]);
+    const country =row["Country"];
+
+    if(!ageParCountry[country]){
+        ageParCountry[country]=[];
+    }
+    ageParCountry[country].push(age);
+ }
+ //console.log("l'age par chaque pays est:\n",ageParCountry);
+//fonction pour calculer mediane pour une liste
+ function Mediane(list){
+    if(list.length ===0) return 0;
+    const sortedList =[...list].sort((a,b)=>a-b);
+    const milieu = Math.floor(sortedList.length/2);
+
+    if(sortedList.length %2 !==0){
+        return sortedList[milieu];
+    }else{
+        return (sortedList[milieu -1] + sortedList[milieu])//2;
+    }
+
+ }
+ //calcule de mediane des pays
+ const medianeParCountry = {};
+ for(const country in ageParCountry){
+    const ageList = ageParCountry[country];
+    medianeParCountry[country] =Mediane(ageList);
+ }
+
+ console.log("le médiane d'age pour chaque pays est :",medianeParCountry);
