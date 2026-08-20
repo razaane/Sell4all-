@@ -29,3 +29,33 @@ for(const col in row1){
     }
 }
 
+//Calculez la moyenne et la médiane des colonnes suivantes :
+//●​ Age ;
+const ages=[];
+for(const row of data){
+    ages.push(Number(row["Age"]));
+}
+//console.log("la liste des ages : \n",ages);
+const count = ages.length;
+let sum=0;
+for(const age of ages){
+    sum+=age;
+}
+const moyenne = sum/count;
+console.log("la moyenne d'age est:",moyenne.toFixed(2));
+
+
+//Calculez la moyenne et la médiane des colonnes suivantes :
+//●​ Customer spendings.
+const spendings=[];
+for(const row of data){
+    spendings.push(Number(row["Customer spendings"]));
+}
+//console.log(spendings)
+const count2 = spendings.length;
+let sum2 =0;
+for(spen of spendings){
+    sum2+=spen;
+}
+const moyenneSpendings = sum2/count2;
+console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2));
