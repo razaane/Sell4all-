@@ -98,3 +98,52 @@ console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2)
 
  //
 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ //Nettoyez les données en :
+//●​ Supprimant les lignes des utilisateurs ayant dépensé moins de 10 € ;
+
+const dataNetoyage =[];
+for(row of data){
+    const spendingsByCustomer = Number(row["Customer spendings"]);
+    if(spendingsByCustomer >=10){
+        dataNetoyage.push(row);
+    }
+}
+console.log("data before",data.length);
+console.log("data clean :",dataNetoyage.length);
+
+//●​ Supprimant les lignes dupliquées.
+const dataNotDoubeled =[];
+for(row of dataNetoyage){
+    const rowTxt=JSON.stringify(row);
+    const exists=dataNotDoubeled.some(item=>JSON.stringify(item)===rowTxt);
+    if(!exists){
+    dataNotDoubeled.push(row);
+}
+}
+
+console.log("data doubled :",data.length);
+console.log("data not doubled :",dataNotDoubeled.length);
+
+//les données nettoyées dans un nouveau fichier CSV  ●​ Country ;●​ Age ;●​ Gender ;●​ Customer spendings.
+let contentCSV = "Country,Age,Gender,Customer spendings\n"
+for (row of dataNotDoubeled){
+    const ligne =  row["Country"] +"," +row["Age"]+","+row["Gender"] + ","+ row["Customer spendings"] ;
+    contentCSV = contentCSV + ligne +"\n";
+}
+fs.writeFileSync("data/dataset-clean.csv", contentCSV);
+console.log("file exported");
+
