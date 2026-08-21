@@ -8,25 +8,28 @@ const data = parse(fileContent,{rows:true,columns:true});
 
 //●​ Afficher les informations des cinq premières lignes du fichier ;
 //console.log("les 5 premiers lignes",data.slice(0,5));
-
+console.log("             RAPPORT D'ANALYSE SELL4ALL           ");
+console.log("--------------------------------------------------");
 //○​ Le nombre de lignes ;
-console.log("nombre de ligne:",data.length);
+console.log("\n 1-nombre de ligne:",data.length);
 
 // ○​ Les colonnes du fichier CSV ;
 const NbrColumns = Object.keys(data[0]);
-console.log("Nombre de colonnes:",NbrColumns.length);
+console.log("\n 2-Nombre de colonnes:",NbrColumns.length);
 
 //○​ Les types de données des différentes colonnes.
+console.log("\n 2-type de données pour chaque colonnes :")
 const row1 = data[0];
 for(const col in row1){
     const value = row1[col];
     if (value === "true" || value==="false"){
-        console.log(col,"c'ets un boolean");
+        ;
+        console.log(col," : boolean");
     }else if(!isNaN(value)) {
-        console.log(col,": c'est un nombre");
+        console.log(col," : nombre");
     }
     else{
-        console.log(col,"c'est un string");
+        console.log(col," : chaine");
     }
 }
 
@@ -43,7 +46,7 @@ for(const age of ages){
     sum+=age;
 }
 const moyenne = sum/count;
-console.log("la moyenne d'age est:",moyenne.toFixed(2));
+console.log("\n 4-la moyenne d'age est:",moyenne.toFixed(2));
 
 
 //Calculez la moyenne et la médiane des colonnes suivantes :
@@ -59,10 +62,10 @@ for(spen of spendings){
     sum2+=spen;
 }
 const moyenneSpendings = sum2/count2;
-console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2));
+console.log("\n 5-la moyennes de customer spendings is :",moyenneSpendings.toFixed(2));
 
 //Calculez la médiane d'âge pour chaque pays.
-//groupement pour chaque pays 
+//groupement pour chaque pays par age
  const ageParCountry={};
  for(row of data){
     const age =Number(row["Age"]);
@@ -87,25 +90,34 @@ console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2)
     }
 
  }
- //calcule de mediane des pays
- const medianeParCountry = {};
+ //calcule d'age mediane des pays
+ const medianeAgeParCountry = {};
  for(const country in ageParCountry){
     const ageList = ageParCountry[country];
-    medianeParCountry[country] =Mediane(ageList);
+    medianeAgeParCountry[country] =Mediane(ageList);
  }
- console.log("le médiane d'age pour chaque pays est :",medianeParCountry);
+ console.log("\n 6-le médiane d'age pour chaque pays est :",medianeAgeParCountry);
 
 
 
+//groupement pour chaque pays par spendings
+ const spendParCountry={};
+ for(row of data){
+    const spendings =Number(row["Customer spendings"]);
+    const country =row["Country"];
 
+    if(!spendParCountry[country]){
+        spendParCountry[country]=[];
+    }
+    spendParCountry[country].push(spendings);
+ }
 
-
-
-
-
- 
-
- 
+const medianeSpendParCountry = {};
+ for(const country in spendParCountry){
+    const spendList = spendParCountry[country];
+    medianeSpendParCountry[country] =Mediane(spendList);
+ }
+ console.log("\n 7-le médiane d'expenses pour chaque pays est :",medianeSpendParCountry);
 
  //les dépenses des clients par pays pour le graphe 
  const depensesPerCountry ={}
@@ -117,7 +129,7 @@ console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2)
     }
     depensesPerCountry[country] = depensesPerCountry[country] + spendings;
  }
- console.log(depensesPerCountry);
+//console.log(depensesPerCountry);
 
  //Nettoyez les données en :
 //●​ Supprimant les lignes des utilisateurs ayant dépensé moins de 10 € ;
@@ -129,8 +141,9 @@ for(row of data){
         dataNetoyage.push(row);
     }
 }
-console.log("data before",data.length);
-console.log("data clean :",dataNetoyage.length);
+console.log("\n 8-Nettoyage des données")
+console.log("8-1data before supprimer spendings more than 10 euro",data.length);
+console.log("8-2data clean :",dataNetoyage.length);
 
 //●​ Supprimant les lignes dupliquées.
 const dataNotDoubeled =[];
@@ -142,8 +155,8 @@ for(row of dataNetoyage){
 }
 }
 
-console.log("data doubled :",data.length);
-console.log("data not doubled :",dataNotDoubeled.length);
+console.log("8-3data doubled :",data.length);
+console.log("8-4data not doubled :",dataNotDoubeled.length);
 
 //les données nettoyées dans un nouveau fichier CSV  ●​ Country ;●​ Age ;●​ Gender ;●​ Customer spendings.
 let contentCSV = "Country,Age,Gender,Customer spendings\n"
@@ -152,6 +165,5 @@ for (row of dataNotDoubeled){
     contentCSV = contentCSV + ligne +"\n";
 }
 fs.writeFileSync("data/dataset-clean.csv", contentCSV);
-console.log("file exported");
 
 
