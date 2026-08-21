@@ -96,21 +96,28 @@ console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2)
  console.log("le médiane d'age pour chaque pays est :",medianeParCountry);
 
 
- //
+
+
+
+
+
+
 
  
 
+ 
 
-
-
-
-
-
-
-
-
-
-
+ //les dépenses des clients par pays pour le graphe 
+ const depensesPerCountry ={}
+ for(row of data){
+    const country = row["Country"];
+    const spendings = Number(row["Customer spendings"]);
+    if(!depensesPerCountry[country]){
+        depensesPerCountry[country]=0;
+    }
+    depensesPerCountry[country] = depensesPerCountry[country] + spendings;
+ }
+ console.log(depensesPerCountry);
 
  //Nettoyez les données en :
 //●​ Supprimant les lignes des utilisateurs ayant dépensé moins de 10 € ;
@@ -146,4 +153,5 @@ for (row of dataNotDoubeled){
 }
 fs.writeFileSync("data/dataset-clean.csv", contentCSV);
 console.log("file exported");
+
 

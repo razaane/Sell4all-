@@ -3,12 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Graph for data </title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.min.js">
+   <canvas id ="Graph"></canvas>
+   <script>
+    const countries = ["Norway", "Pakistan", "Colombia", "South Africa", "France", "Belgium", "Canada", "Indonesia", "Brazil", "Italy", "Australia", "Turkey", "Nigeria", "Germany", "United States", "Mexico", "Netherlands", "Poland", "Vietnam", "Costa Rica", "Peru", "China", "India", "Ireland", "Austria", "New Zealand", "Philippines", "South Korea", "Russian Federation", "Sweden", "Ukraine", "Singapore", "Spain", "Chile", "United Kingdom"];
+    const values = [3387, 3913, 3881, 5369, 4598, 2806, 3026, 5236, 4113, 2742, 3492, 4091, 4247, 4989, 7166, 8436, 7243, 3566, 4435, 3743, 5108, 5959, 4543, 5284, 4584, 6396, 5001, 4216, 4516, 3420, 5488, 2069, 4165, 4351, 1561];
 
-    </script>
+    const chart = document.getElementById("Graph");
+
+    new Chart(chart, {
+    type: "bar",
+    data: {
+        labels: countries,
+        datasets: [{
+            label: "Total depenses per Country",
+            data: values,
+            backgroundColor:"purple"
+        }]
+    }
+    })
+   </script>
     
 </body>
 </html>
+
