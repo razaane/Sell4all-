@@ -93,5 +93,8 @@ console.log("la moyennes de customer spendings is :",moyenneSpendings.toFixed(2)
     const ageList = ageParCountry[country];
     medianeParCountry[country] =Mediane(ageList);
  }
-
  console.log("le médiane d'age pour chaque pays est :",medianeParCountry);
+
+
+ //
+
